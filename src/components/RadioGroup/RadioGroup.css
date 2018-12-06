@@ -1,0 +1,7 @@
+.label {
+  float: top;
+  border-style: dotted;
+}
+.input {
+	display:none;
+}

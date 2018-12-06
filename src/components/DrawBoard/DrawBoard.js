@@ -1,22 +1,24 @@
 // react, fabric and styles
 import React, { Component } from 'react';
-import '../../App.css';
 import { fabric } from 'fabric';
 
 // Children and assets
 import Board from '../Board/Board.js';
 import Button from '../Button/Button.js';
+import RadioGroup from '../RadioGroup/RadioGroup.js';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft, faArrowCircleRight,
-  faTimes, faPencilRuler, faDotCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
+  faPencilRuler, faCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 // Utils
-import drawGrid from './utils/drawGrid.js';
 import { undo, redo } from './utils/doStack.js';
 import { onMouseDown, onMouseMove, onMouseUp } from './utils/eventHandlers.js'
 
+import { faPen, faPencilAlt, faPenFancy } from '@fortawesome/free-solid-svg-icons';
 
-class TicTacToe extends Component {
+
+class DrawBoard extends Component {
   constructor(props){
     super(props);
     this.state = { 
@@ -25,19 +27,20 @@ class TicTacToe extends Component {
       undoables: [],
       redoables:[],
       drawTool: false,
+      toolSize: "2",
+      toolColor: "black",
       xTool: false,
-      otool: false,
     };
 
     this.canvasRef = React.createRef();
 
     // Bind utils to this
-    this.drawGrid = drawGrid.bind(this);
     this.onMouseDown = onMouseDown.bind(this);
     this.onMouseMove = onMouseMove.bind(this);
     this.onMouseUp = onMouseUp.bind(this);
     this.undo = undo.bind(this);
     this.redo = redo.bind(this);
+    this.handleBaldly = this.handleBaldly.bind(this)
 
 
   }
@@ -68,8 +71,8 @@ class TicTacToe extends Component {
       this.fabricCanvas = new fabric.Canvas(canvasID, canvasOpts)
       // After some experimentation this is a nice place to assign the brush
       this.fabricCanvas.freeDrawingBrush = new fabric['PencilBrush'](this.fabricCanvas);
-      this.fabricCanvas.freeDrawingBrush.color = 'black';
-      this.fabricCanvas.freeDrawingBrush.width = 5;
+      this.fabricCanvas.freeDrawingBrush.color = this.state.toolColor;
+      this.fabricCanvas.freeDrawingBrush.width = this.state.toolSize;
 
     })
 
@@ -84,9 +87,6 @@ class TicTacToe extends Component {
         this.fabricCanvas.setWidth(m/2)
         this.fabricCanvas.setHeight(m/2)}
 
-        // See './utils/drawGrid.js'
-        this.drawGrid()
-
         // See './utils/eventHandlers.js'
         this.fabricCanvas.on("mouse:down", this.onMouseDown)
         this.fabricCanvas.on("mouse:move", this.onMouseMove)
@@ -100,18 +100,32 @@ class TicTacToe extends Component {
 
   }
 
+  handleBaldly = name => (event) => {
+    this.setState({ [name]: event.target.value }, ()=>{
+      switch(name){
+        case 'toolSize':
+          this.fabricCanvas.freeDrawingBrush.width = this.state.toolSize
+          return
+        case 'toolColor':
+          this.fabricCanvas.freeDrawingBrush.color = this.state.toolColor
+          return
+        default:
+          return
+      }
+    });
+
+  }; 
+
   toolBaldly = name => event => {
     this.setState({
       isDown:false,
       drawTool: false,
       xTool: false,
-      oTool: false,
     }, ()=>{
       this.setState({
           [name]:!this.state[name],
           selectedTool: name
         }, ()=>{
-          console.log(this.state)
           this.fabricCanvas.isDrawingMode = this.state.drawTool
           })
     })
@@ -122,6 +136,8 @@ class TicTacToe extends Component {
 
   renderMain() {
     const toolBaldly = this.toolBaldly
+    const handleToolsize = this.handleBaldly("toolSize")
+    const handleToolcolor = this.handleBaldly("toolColor")
     return (
 
           <span>
@@ -152,17 +168,44 @@ class TicTacToe extends Component {
             }>
             <FontAwesomeIcon icon={faPencilRuler}/>
           </Button>
-
-          <Button
-            title="Draw circle"
-            className="App-button"
-            onClick={toolBaldly("oTool")}
-            style={{backgroundColor: this.state.oTool ? "grey" : "rgba(0,0,0,0)"}
-            }>
-            <FontAwesomeIcon icon={faDotCircle}/>
-          </Button>
           </div>
-
+          <div><span>
+          <RadioGroup value={this.state.toolSize} onSubmit={handleToolsize}
+          radiosConfig={
+              [
+                {value: "2"},
+                {value: "4"},
+                {value: "6"},
+              ]
+          } labels={
+              [
+                <FontAwesomeIcon icon={faPenFancy} color="grey"/>,
+                <FontAwesomeIcon icon={faPencilAlt} color="grey"/>,
+                <FontAwesomeIcon icon={faPen} color="grey"/>
+              ]
+          } />
+          <RadioGroup value={this.state.toolColor} onSubmit={handleToolcolor}
+          radiosConfig={
+              [
+                {value: "black"},
+                {value: "blue"},
+                {value: "red"},
+              ]
+          } labels={
+              [
+                <FontAwesomeIcon icon={faCircle} color="black" style={
+                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                  }/>,
+                <FontAwesomeIcon icon={faCircle} color="blue" style={
+                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                  }/>,
+                <FontAwesomeIcon icon={faCircle} color="red" style={
+                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                  }/>
+              ]
+          } />
+          </span>
+          </div>
           </span>
           )
   }
@@ -176,4 +219,4 @@ class TicTacToe extends Component {
   }
 }
 
-export default TicTacToe;
+export default DrawBoard;

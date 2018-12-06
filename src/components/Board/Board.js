@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Field from '../Field/Field.js'
 
 
 
