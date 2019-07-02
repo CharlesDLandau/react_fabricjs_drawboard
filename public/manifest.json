@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React Drawingboard",
+  "name": "A simplistic react drawingboard",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/209/black-nib_2712.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
