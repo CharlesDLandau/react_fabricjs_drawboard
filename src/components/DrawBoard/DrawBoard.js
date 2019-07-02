@@ -98,6 +98,7 @@ class DrawBoard extends Component {
     });
 
 
+
   }
 
   handleBaldly = name => (event) => {
@@ -141,35 +142,30 @@ class DrawBoard extends Component {
     return (
 
           <span>
-          <Button className="App-button">
-            <FontAwesomeIcon icon={faArrowCircleLeft} onClick={this.undo}/>
-          </Button>
+          <RadioGroup value={0} radiosConfig={[0, 1]} onSubmit={()=>{return null}} labels={[
+            <FontAwesomeIcon icon={faArrowCircleLeft} title="undo"
+            onClick={this.undo}/>,
+            <FontAwesomeIcon icon={faArrowCircleRight} title="redo"
+            onClick={this.redo}/>
+                  ]}/>
           
-          <Button className="App-button">
-            <FontAwesomeIcon icon={faArrowCircleRight} onClick={this.redo}/>
-          </Button>
-          
-          <div>
-          <Button title="Free draw"
-            className="App-button"
-            onClick={toolBaldly("drawTool")} 
-            style={
-              {backgroundColor: this.state.drawTool ? "grey" : "rgba(0,0,0,0)"}
-            }>
-            <FontAwesomeIcon icon={faEdit}/>
-          </Button>
-          
-          <Button
-            title="Draw line"
-            className="App-button"
+          <br/><div>
+          <RadioGroup value={0} radiosConfig={[
+            {value:0}, {value:1}
+            ]} onSubmit={()=>{return null}} labels={[
+            <FontAwesomeIcon color="lightGrey"
+              onClick={toolBaldly("drawTool")} 
+              title="Free draw" icon={faEdit}/>,
+            <FontAwesomeIcon color="lightGrey" 
+            icon={faPencilRuler} title="Draw line"
             onClick={toolBaldly("xTool")}
-            style={
-              {backgroundColor: this.state.xTool ? "grey" : "rgba(0,0,0,0)"}
-            }>
-            <FontAwesomeIcon icon={faPencilRuler}/>
-          </Button>
+            />
+                  ]}/>
+
+          
+
           </div>
-          <div><span>
+          <div><span><br/>
           <RadioGroup value={this.state.toolSize} onSubmit={handleToolsize}
           radiosConfig={
               [
@@ -179,11 +175,18 @@ class DrawBoard extends Component {
               ]
           } labels={
               [
-                <FontAwesomeIcon icon={faPenFancy} color="grey"/>,
-                <FontAwesomeIcon icon={faPencilAlt} color="grey"/>,
-                <FontAwesomeIcon icon={faPen} color="grey"/>
+                <FontAwesomeIcon icon={faPenFancy} onClick={handleToolsize}
+                color="lightGrey" title="Thin lines"
+                />,
+                <FontAwesomeIcon icon={faPencilAlt} onClick={handleToolsize}
+                color="lightGrey" title="Medium thickness lines"
+                />,
+                <FontAwesomeIcon icon={faPen} onClick={handleToolsize}
+                color="lightGrey" title="Thick lines"
+                />
               ]
           } />
+          <br/>
           <RadioGroup value={this.state.toolColor} onSubmit={handleToolcolor}
           radiosConfig={
               [
@@ -194,17 +197,17 @@ class DrawBoard extends Component {
               ]
           } labels={
               [
-                <FontAwesomeIcon icon={faCircle} color="black" style={
-                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                <FontAwesomeIcon icon={faCircle} color="black" title="black" style={
+                    {borderRadius:"4px", padding:"1px"}
                   }/>,
-                <FontAwesomeIcon icon={faCircle} color="blue" style={
-                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                <FontAwesomeIcon icon={faCircle} color="blue" title="blue" style={
+                    {borderRadius:"4px", padding:"1px"}
                   }/>,
-                <FontAwesomeIcon icon={faCircle} color="red" style={
-                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                <FontAwesomeIcon icon={faCircle} color="red" title="red" style={
+                    {borderRadius:"4px", padding:"1px"}
                   }/>,
-                <FontAwesomeIcon icon={faCircle} color="green" style={
-                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                <FontAwesomeIcon icon={faCircle} color="green" title="green" style={
+                    {borderRadius:"4px", padding:"1px"}
                   }/>
               ]
           } />

@@ -8,7 +8,7 @@
 }
 
 .App-container {
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.7);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,21 +20,6 @@
 .App-link {
   color: #61dafb;
 }
-
-.App-button {
-  color: #d6d6d6;
-  background: none;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 0.3em;
-  padding: 0.3em;
-  font-size: 1.2em;
-
-}
-.App-button:hover {
-    background-color: grey;
-}
-.App-button:focus{outline: 0;}
 
 @keyframes App-logo-spin {
   from {
