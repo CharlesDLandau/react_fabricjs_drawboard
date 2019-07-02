@@ -190,6 +190,7 @@ class DrawBoard extends Component {
                 {value: "black"},
                 {value: "blue"},
                 {value: "red"},
+                {value: "green"}
               ]
           } labels={
               [
@@ -200,6 +201,9 @@ class DrawBoard extends Component {
                     {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
                   }/>,
                 <FontAwesomeIcon icon={faCircle} color="red" style={
+                    {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
+                  }/>,
+                <FontAwesomeIcon icon={faCircle} color="green" style={
                     {backgroundColor:"grey", borderRadius:"4px", padding:"1px"}
                   }/>
               ]
