@@ -149,7 +149,7 @@ class DrawBoard extends Component {
                   ]}/>
           
           <br/><div>
-          <RadioGroup value={0} radiosConfig={[
+          <RadioGroup value={null} radiosConfig={[
             {value:0}, {value:1}
             ]} onSubmit={()=>{return null}} labels={[
             <FontAwesomeIcon color="lightGrey"
