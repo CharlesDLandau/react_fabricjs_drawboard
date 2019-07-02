@@ -4,7 +4,6 @@ import { fabric } from 'fabric';
 
 // Children and assets
 import Board from '../Board/Board.js';
-import Button from '../Button/Button.js';
 import RadioGroup from '../RadioGroup/RadioGroup.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
